@@ -1,0 +1,85 @@
+/**
+ * projectMap.css
+ * 
+ * Project-specific CSS styles
+ * Add your project's custom styles here
+ * 
+ * Note: Common styles (dropdown menu, modals, guide) are in style.css
+ */
+
+/* ============================================
+   Loading Overlay Styles (Optional)
+   ============================================ */
+
+#data-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-overlay-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.loading-spinner-wrapper {
+    margin-bottom: 20px;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #bf5700;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.loading-progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.loading-progress-bar {
+    height: 100%;
+    background-color: #bf5700;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.loading-percentage {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ============================================
+   Project-Specific Styles
+   Add your custom styles below
+   ============================================ */
+

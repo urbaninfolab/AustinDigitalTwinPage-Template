@@ -1,0 +1,9 @@
+# Image Resources Directory
+
+Please place the following image files in this directory:
+- project_icon.png (Project icon, recommended size: 50x50px)
+- favicon.ico (Website icon)
+- location.png (Location button icon, optional)
+- layer.png (Layer control icon for dropdown menu, recommended size: 25x25px)
+  - This icon is used as the trigger button for the layer control sidebar
+  - If you don't have this file, you can customize the icon in style.css by changing the background-image URL in .dropdown-check-list .anchor:after

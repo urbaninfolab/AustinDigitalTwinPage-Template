@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Project Name - Austin Digital Twin</title>
+	<meta name="description" content="Austin digital twin project description.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Open Graph tags for social media -->
+	<meta property="og:title" content="Project Name - Austin Digital Twin">
+	<meta property="og:description" content="Austin digital twin project description.">
+	<meta property="og:image" content="assets/images/project_icon.png">
+	<meta property="og:url" content="project.austindigitaltwin.com">
+
+	<!-- Enables Twitter support -->
+	<meta name="twitter:card" content="summary">
+
+	<!-- Leaflet requirements -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+		crossorigin="" />
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Leaflet plugins (add as needed) -->
+	<script src="https://unpkg.com/leaflet.markercluster@1.1.0/dist/leaflet.markercluster.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.Default.css" />
+
+	<!-- Load Esri Leaflet from CDN -->
+	<script src="https://unpkg.com/esri-leaflet"></script>
+
+	<!-- Esri Leaflet Geocoder -->
+	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
+	<script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<!-- Project CSS -->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/projectMap.css">
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+	<!-- Google Analytics (optional - update with your tracking ID) -->
+	<!--
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-XXXXXXXXXX');
+	</script>
+	-->
+
+	<!-- Leaflet.GridLayer.GoogleMutant (if using Google Maps layers) -->
+	<!--
+	<script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/dist/Leaflet.GoogleMutant.js"></script>
+	-->
+</head>
+
+<body>
+	<div id="map"></div>
+
+	<div id="spinner">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+
+	<!-- Info Modal -->
+	<div class="modal fade" id="infoModal" role="dialog">
+		<div id="InfoBox" class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Project Name Information</h4>
+				</div>
+				<div class="modal-body" style="text-align:left;">
+					<h4>About</h4>
+					<p>This page provides interactive data visualization for Austin, Texas. The map displays various data points including their locations, types, and details.</p>
+
+					<h4>Credits</h4>
+					<p>Created by the Urban Information Lab under the Good Systems Initiative at The University of Texas at Austin.</p>
+					<p>Additional support for this project comes from the Texas Advanced Computing Center.</p>
+
+					<div style="text-align:center; margin-top: 20px;">
+						<a href="https://www.urbaninfolab.com" target="_blank">
+							<img width="25%" height="25%"
+								src="https://sites.utexas.edu/uil/files/2020/05/UIL-Final-Logos-03-e1588717100882.png"
+								alt="Urban Info Lab"></img>
+						</a>
+						<a href="https://tacc.utexas.edu" target="_blank">
+							<img width="25%" height="25%"
+								src="https://tacc.utexas.edu/static/site_cms/img/org_logos/tacc-formal.svg"
+								alt="TACC"></img>
+						</a>
+					</div>
+
+					<p style="margin-top: 20px; text-align: center;">
+						An extended list of credits and data sources can be found <a href="#" onclick="credits()">here</a>.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Credits Modal -->
+	<div class="modal fade" id="creditsModal" role="dialog">
+		<div id="InfoBox1" class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Project Name Extended Credits</h4>
+				</div>
+				<div class="modal-body" id="statsBody" style="text-align:left;">
+					<h5>Data Sources</h5>
+					<p>This map integrates data from multiple sources to provide comprehensive information:</p>
+					<ul>
+						<li>Data source 1</li>
+						<li>Data source 2</li>
+						<li>Data source 3</li>
+					</ul>
+
+					<h5>Project Partners</h5>
+					<ul>
+						<li><strong>Urban Info Lab</strong> - The University of Texas at Austin</li>
+						<li><strong>Texas Advanced Computing Center (TACC)</strong></li>
+						<li><strong>Good Systems Initiative</strong> - UT Austin</li>
+					</ul>
+
+					<h5>Contact</h5>
+					<p>For questions or feedback about this map, please visit the <a
+							href="https://www.urbaninfolab.com/austindigitaltwin" target="_blank">Austin Digital
+							Twin</a> project page.</p>
+				</div>
+				<div class="modal-footer">
+					<button onclick="$('#infoModal').show()" type="button" class="btn btn-default"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function info() {
+			$("#infoModal").modal({ backdrop: true });
+		}
+		function credits() {
+			$('#infoModal').hide();
+			$("#creditsModal").modal({ backdrop: true });
+		}
+	</script>
+
+	<!-- Header Section -->
+	<section>
+		<div style="display: block; background-color: #bf5700; height: 40px; text-align: center; user-select: none;">
+			<div onclick="info()">
+				<!-- Project Logo -->
+				<a href="#" onclick="info()" style="float: left; margin-right: 1rem; margin-top:0;">
+					<span style="margin-left: 10px; margin-top: 5px; display: block; max-width: 100%; height: auto;">
+						<img src="assets/images/project_icon.png" width="32px" height="32px" xml:space="preserve" alt="Project Icon"> </img>
+					</span>
+				</a>
+
+				<!-- Project Title -->
+				<h2 id="MapTitle" style="float: left; margin-right: 1rem; margin-top:5px; color: white;">
+					<b><a style="color:white" href="#">Project Name Map</a></b>
+				</h2>
+			</div>
+
+			<!-- Urban Info Lab Branding -->
+			<a href="https://www.urbaninfolab.com/austindigitaltwin"
+				style="float: right; margin-right: 1rem; margin-top:0;">
+				<span style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;color: #fff">Urban Info Lab</span>
+				<span style="max-height: 25px; margin-top: 9px; display: block; max-width: 100%; height: auto;">
+					<img src="https://sites.utexas.edu/uil/files/2020/05/UIL-Final-Logos-03-e1588717100882.png"
+						width="115px" height="25px" style="display: block; max-width: 100%; height: auto;"
+						alt="Urban Info Lab">
+				</span>
+			</a>
+
+			<!-- Layer Control Menu (optional - customize as needed) -->
+			<div style="float: right; margin-right: 2rem; margin-top:-10px;" class="date-bar">
+				<div id="filter-menu" class="dropdown-check-list" tabindex="100">
+					<span class="anchor">&#12288;&#12288;</span>
+					<ul class="items">
+						<li class="sidebar-header" style="padding: 15px 12px; margin-bottom: 10px; border-bottom: 2px solid #000;">
+							<h3 style="margin: 0; color: #333; font-size: 18px; display: inline-block;">Layer Control</h3>
+							<span class="sidebar-close" style="float: right; cursor: pointer; font-size: 24px; color: #666; line-height: 1; margin-top: -2px;" title="Close">×</span>
+						</li>
+						<!-- Add your layer checkboxes here -->
+						<b>
+							<li>Data Layers</li>
+						</b>
+						<li><input style="margin-left: 15px;" type="checkbox" class="layer1" checked /> Layer 1</li>
+						<li><input style="margin-left: 15px;" type="checkbox" class="layer2" /> Layer 2</li>
+					</ul>
+				</div>
+				<!-- Overlay for closing menu -->
+				<div class="dropdown-check-list-overlay" id="filter-menu-overlay"></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Project-specific script files - load in order -->
+	<!-- 1. Common map functionality -->
+	<script src="assets/js/map_common.js"></script>
+	<!-- 2. Project-specific functionality -->
+	<script src="assets/js/project_map.js"></script>
+	<!-- 3. Initialization script -->
+	<script src="assets/js/map_init.js"></script>
+
+	<!-- Usage Instructions Modal -->
+	<div id="usageModal">
+		<div class="usage-modal-content">
+			<span class="usage-modal-close" onclick="closeUsageModal()">&times;</span>
+			<h2 class="usage-modal-title">Welcome to Project Name Map</h2>
+			<h3 class="usage-modal-subtitle">Guide</h3>
+
+			<div class="usage-modal-section">
+				<div class="usage-modal-text">
+					<strong>Getting Started:</strong>
+					<span>Customize this welcome message to explain your project's features and how to use the map.</span>
+				</div>
+			</div>
+
+			<div class="usage-modal-footer">
+				<button class="usage-modal-button" onclick="closeUsageModal()">Got it!</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function closeUsageModal() {
+			document.getElementById('usageModal').style.display = 'none';
+		}
+
+		window.onload = function () {
+			setTimeout(function () {
+				document.getElementById('usageModal').style.display = 'block';
+			}, 500);
+		};
+	</script>
+
+</body>
+</html>
+

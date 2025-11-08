@@ -1,0 +1,451 @@
+/* Fonts */
+
+@font-face {
+	font-family: "ManifoldDSA";
+	src: url("../fonts/ManifoldDSA/ManifoldDSA-Medium.eot"); 
+	src: url("../fonts/ManifoldDSA/ManifoldDSA-Medium.eot?#iefix") format("embedded-opentype"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-Medium.woff2") format("woff2"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-Medium.woff") format("woff"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-Medium.ttf") format("truetype");
+	font-weight: regular;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "ManifoldDSA";
+	src: url("../fonts/ManifoldDSA/ManifoldDSA-ExtraBold.eot"); 
+	src: url("../fonts/ManifoldDSA/ManifoldDSA-ExtraBold.eot?#iefix") format("embedded-opentype"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-ExtraBold.woff2") format("woff2"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-ExtraBold.woff") format("woff"), 
+		url("../fonts/ManifoldDSA/ManifoldDSA-ExtraBold.ttf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "FontAwesome";
+	src: url("../fonts/FontAwesome/fa-solid-900.eot"); 
+	src: url("../fonts/FontAwesome/fa-solid-900.eot?#iefix") format("embedded-opentype"), 
+		url("../fonts/FontAwesome/fa-solid-900.woff2") format("woff2"), 
+		url("../fonts/FontAwesome/fa-solid-900.woff") format("woff"), 
+		url("../fonts/FontAwesome/fa-solid-900.ttf") format("truetype");
+	font-weight: regular;
+	font-style: normal;
+}
+
+/* Global elements */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #2f2f2f;
+	text-align: center;
+}
+
+body, input, button, #map {
+	font-family: "ManifoldDSA", sans-serif;
+}
+
+body, input, button {
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+a {
+	text-decoration: none;
+	outline: 0;
+}
+
+.property-details-link,
+a {
+	color: #1e6bb8;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Map */
+
+#map {
+	position: absolute;
+	top: 40px;
+	bottom: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+/* Loading spinner */
+
+#spinner {
+	z-index: 1000;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 4rem;
+	height: 4rem;
+	margin-left: -2rem;
+	margin-top: -2rem;
+}
+
+#spinner div {
+	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	width: 3rem;
+	height: 3rem;
+	margin: .5rem;
+	border: .25rem solid #7f7f7f;
+	border-radius: 50%;
+	border-color: #7f7f7f transparent transparent transparent;
+	animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+#spinner div:nth-child(1) {
+	animation-delay: -0.45s;
+}
+
+#spinner div:nth-child(2) {
+	animation-delay: -0.3s;
+}
+
+#spinner div:nth-child(3) {
+	animation-delay: -0.15s;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Cluster Marker (customize colors as needed) */
+.marker-cluster-red {
+	background-color: rgba(255, 99, 99, 0.6);
+}
+.marker-cluster-red div {
+	background-color: rgba(255, 50, 50, 0.6);
+	color: white;
+}
+
+.marker-cluster-blue {
+	background-color: rgba(99, 99, 255, 0.6);
+}
+.marker-cluster-blue div {
+	background-color: rgba(50, 50, 255, 0.6);
+	color: white;
+}
+
+.marker-cluster-green {
+	background-color: rgba(99, 255, 99, 0.6);
+}
+.marker-cluster-green div {
+	background-color: rgba(50, 255, 50, 0.6);
+	color: white;
+}
+
+/* ============================================
+   Modal Styles (Common)
+   ============================================ */
+
+/* Styling h1 tag */
+h1 {
+	color: green;
+	text-align: center;
+}
+
+/* Styling modal */
+.modal:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.modal-dialog {
+	display: inline-block;
+	vertical-align: middle;
+	align-content: center;
+}
+
+.modal .modal-content {
+	padding: 20px 20px 20px 20px;
+	-webkit-animation-name: modal-animation;
+	-webkit-animation-duration: 0.5s;
+	animation-name: modal-animation;
+	animation-duration: 0.5s;
+}
+
+/* ============================================
+   Dropdown Menu Styles (Common - Sidebar Style)
+   ============================================ */
+
+.dropdown-check-list {
+	display: inline-block;
+	margin-left: 30px;
+	margin-top: 12px;
+	position: relative;
+}
+
+/* Overlay styles */
+.dropdown-check-list-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.dropdown-check-list.visible ~ .dropdown-check-list-overlay,
+.dropdown-check-list-overlay.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+.dropdown-check-list .anchor {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+}
+
+.dropdown-check-list .anchor:after {
+	position: absolute;
+	content: "";
+	width: 25px;
+	height: 25px;
+	/* Customize the icon by changing the URL below */
+	/* Default: layer.png (can be changed to your custom icon) */
+	background-image: url("../images/layer.png");
+	background-size: cover;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	padding: 5px;
+	right: 10px;
+	top: 25%;
+}
+
+.dropdown-check-list .anchor:active:after {
+	right: 8px;
+	top: 21%;
+}
+
+/* Sidebar menu items */
+.dropdown-check-list ul.items {
+	font-family: 'Helvetica', sans-serif;
+	user-select: none;
+	padding: 20px;
+	margin: 0;
+	border: none;
+	border-radius: 0;
+	border-left: 1px solid #ccc;
+	background-color: white;
+	position: fixed;
+	z-index: 1000;
+	width: 300px;
+	max-width: 80vw;
+	top: 0;
+	right: -300px;
+	height: 100vh;
+	overflow-y: auto;
+	text-align: left;
+	box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+	transition: right 0.3s ease-in-out;
+}
+
+.dropdown-check-list ul.items li {
+	font-family: 'Helvetica', sans-serif;
+	list-style: none;
+	padding: 8px 12px;
+	margin-bottom: 4px;
+	transition: background-color 0.2s;
+}
+
+.dropdown-check-list ul.items li:hover {
+	background-color: #f5f5f5;
+}
+
+.dropdown-check-list ul.items li.sidebar-header {
+	background-color: #f8f8f8;
+	padding: 15px 12px;
+	margin-bottom: 10px;
+	border-bottom: 2px solid #000;
+}
+
+.dropdown-check-list ul.items li.sidebar-header:hover {
+	background-color: #f8f8f8;
+}
+
+.dropdown-check-list .sidebar-close {
+	transition: color 0.2s;
+}
+
+.dropdown-check-list .sidebar-close:hover {
+	color: #000;
+}
+
+/* Category headers (b tags) */
+.dropdown-check-list ul.items b {
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	margin-top: 16px;
+	margin-bottom: 8px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-check-list ul.items b:first-child {
+	margin-top: 0;
+}
+
+.dropdown-check-list ul.items b li {
+	padding: 0;
+	margin: 0;
+	border-bottom: none;
+}
+
+.dropdown-check-list.visible .anchor {
+	color: #000;
+}
+
+.dropdown-check-list.visible .items {
+	right: 0;
+}
+
+/* ============================================
+   Custom Control Styles (Common)
+   ============================================ */
+
+.geocoder-control {
+	background: white;
+	border-radius: 4px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
+
+.geocoder-control-input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+
+/* ============================================
+   Usage Guide Modal Styles (Common)
+   ============================================ */
+
+#usageModal {
+	display: none;
+	position: fixed;
+	z-index: 10000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.6);
+	overflow-y: auto;
+}
+
+.usage-modal-content {
+	background-color: #bf5700;
+	margin: 5% auto;
+	padding: 25px;
+	border: 1px solid #888;
+	width: 85%;
+	max-width: 650px;
+	border-radius: 8px;
+	position: relative;
+	max-height: 85vh;
+	overflow-y: auto;
+	color: #fefefe;
+}
+
+.usage-modal-close {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	color: #fefefe;
+	font-size: 32px;
+	font-weight: bold;
+	cursor: pointer;
+	line-height: 1;
+}
+
+.usage-modal-close:hover {
+	color: #e8e8e8;
+}
+
+.usage-modal-title {
+	margin-top: 0;
+	color: #fefefe;
+}
+
+.usage-modal-subtitle {
+	margin-bottom: 20px;
+	border-bottom: 2px solid #fefefe;
+	padding-bottom: 10px;
+	color: #fefefe;
+}
+
+.usage-modal-section {
+	margin-bottom: 18px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.usage-modal-text {
+	color: #fefefe;
+	text-align: left;
+}
+
+.usage-modal-text strong {
+	color: #fefefe;
+	display: block;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+.usage-modal-footer {
+	text-align: center;
+	margin-top: 25px;
+	padding-top: 20px;
+	border-top: 1px solid rgba(254, 254, 254, 0.3);
+}
+
+.usage-modal-button {
+	background-color: #fefefe;
+	color: #bf5700;
+	border: none;
+	padding: 12px 40px;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: background-color 0.3s;
+}
+
+.usage-modal-button:hover {
+	background-color: #e8e8e8;
+}
+
